@@ -24,7 +24,7 @@ public:
     unsigned int size() const;
     unsigned int get_capacity() const;
 };
-
+// Нет ну так по красоте конечно
 template<typename T>
 subvector<T>::subvector() : mas(nullptr), top(0), capacity(0) {}
 
@@ -41,7 +41,7 @@ subvector<T>::subvector(const subvector& other) : mas(nullptr), top(0), capacity
             mas[i] = other.mas[i];
         }
         top = other.top;
-        capacity = other.capacity;
+        capacity = other.capacity;  // это тоже загоняется в список инициализации
     }
 }
 
@@ -49,7 +49,7 @@ template<typename T>
 subvector<T>& subvector<T>::operator=(const subvector& other) {
     if (this != &other) {
         delete[] mas;
-        
+        // код ниже похож на логику копирующего конструктора. с помощью copy&swap можно было переиспользовать имеющийся код
         if (other.capacity > 0) {
             mas = new T[other.capacity];
             for (unsigned int i = 0; i < other.top; i++) {
@@ -87,6 +87,7 @@ subvector<T>& subvector<T>::operator=(subvector&& other) {
         other.capacity = 0;
     }
     return *this;
+    // Тут правильнее не удалять себя (это долго), а отдать свое состояние внутрь other, так как это move операция, то такое поведение корректно
 }
 
 template<typename T>
@@ -156,4 +157,5 @@ unsigned int subvector<T>::size() const {
 template<typename T>
 unsigned int subvector<T>::get_capacity() const {
     return capacity;
+
 }
