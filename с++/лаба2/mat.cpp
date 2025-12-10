@@ -25,6 +25,7 @@ public:
 
 template<typename T>
 Matrix<T>::Matrix(unsigned rows, unsigned cols, T value) : rows(rows), cols(cols) {
+    // По-хорошему это бы вынести в отдельный консруктор для вектора
     for (unsigned i = 0; i < rows * cols; i++) {
         data.push_back(value);
     }
@@ -34,7 +35,7 @@ template<typename T>
 Matrix<T> Matrix<T>::Identity(unsigned n) {
     Matrix<T> result(n, n, 0);
     for (unsigned i = 0; i < n; i++) {
-        result(i, i) = 1;
+        result(i, i) = 1; // Литерал 1 имеет тип int, а не T
     }
     return result;
 }
@@ -46,6 +47,8 @@ Matrix<T> Matrix<T>::getSpecificDeterminant(unsigned n, T determinant) {
     return result;
 }
 
+// Ну окей, но диагональная матрица -- это слишком простой пример. Лушче нижнетреугольная
+
 template<typename T>
 unsigned Matrix<T>::rows() const {
     return rows;
@@ -55,6 +58,8 @@ template<typename T>
 unsigned Matrix<T>::cols() const {
     return cols;
 }
+
+// Два метода ниже можно написать один через другой, чтобы не дублировать код
 
 template<typename T>
 Matrix<T>& Matrix<T>::transpose() {
@@ -87,4 +92,5 @@ T& Matrix<T>::operator()(unsigned row, unsigned col) {
 template<typename T>
 T Matrix<T>::operator()(unsigned row, unsigned col) const {
     return data[row * cols + col];
+
 }
