@@ -54,7 +54,7 @@ subforwardlist<T>::subforwardlist(const subforwardlist& other) : begin(nullptr) 
 }
 
 template<typename T>
-subforwardlist<T>& subforwardlist<T>::operator=(const subforwardlist& other) {
+subforwardlist<T>& subforwardlist<T>::operator=(const subforwardlist& other) {   // Тут абсолютно аналогичные замечание про copy&swap
     if (this == &other) return *this;
     
     while (begin) {
@@ -85,10 +85,10 @@ subforwardlist<T>::subforwardlist(subforwardlist&& other) : begin(other.begin) {
 }
 
 template<typename T>
-subforwardlist<T>& subforwardlist<T>::operator=(subforwardlist&& other) {
+subforwardlist<T>& subforwardlist<T>::operator=(subforwardlist&& other) {  // замечание аналогично муву в векторе
     if (this == &other) return *this;
     
-    while (begin) {
+    while (begin) { // этот кусок кода можно было вынести в отдельные метод, так как он часто встречается
         Node* temp = begin;
         begin = begin->next;
         delete temp;
@@ -98,6 +98,8 @@ subforwardlist<T>& subforwardlist<T>::operator=(subforwardlist&& other) {
     other.begin = nullptr;
     return *this;
 }
+
+// Здесь и далее неявно используется код, который ищет указатель на ноду по индексу, это можно было вынести в отдельный метод и переиспользовать везд
 
 template<typename T>
 void subforwardlist<T>::push_back(const T& data) {
@@ -191,7 +193,7 @@ T subforwardlist<T>::erase_where(unsigned int where) {
     delete to_delete;
     return value;
 }
-
+// По-хорошему size нужно хранить полем, а не считать за O(N) 
 template<typename T>
 unsigned int subforwardlist<T>::size() {
     unsigned int count = 0;
@@ -201,4 +203,5 @@ unsigned int subforwardlist<T>::size() {
         current = current->next;
     }
     return count;
+
 }

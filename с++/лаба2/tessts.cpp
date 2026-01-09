@@ -32,6 +32,8 @@ T determinant(const Matrix<T>& mat) {
     return det;
 }
 
+// У алгоритма факториальная сложность. Вообще это программма заканчивает работу за осмысленное время?
+
 int main() {
     std::cout << std::fixed;
     std::cout.precision(2);
@@ -40,11 +42,11 @@ int main() {
     std::cout << "=== Test 1: 5x5 matrix ===" << std::endl;
     Matrix<double> m5 = Matrix<double>::getSpecificDeterminant(5, 10.0);
     double det5 = determinant(m5);
-    Matrix<double> m5t = m5.transposed();
+    Matrix<double> m5t = m5.transposed();  // тут транспонируется диагональным матрица, а смысл? Это плохой тест на проверку функции расчета детерминанта
     double det5t = determinant(m5t);
     std::cout << "det(M) = " << det5 << std::endl;
     std::cout << "det(M^T) = " << det5t << std::endl;
-    std::cout << "Equal: " << (std::abs(det5 - det5t) < 0.01) << std::endl;
+    std::cout << "Equal: " << (std::abs(det5 - det5t) < 0.01) << std::endl;   // откуда взялась точность 0.01?
     
     //50x50(25 00)
     std::cout << "\n=== Test 2: 50x50 matrix ===" << std::endl;
@@ -67,4 +69,5 @@ int main() {
     std::cout << "det(M^T) ≈ " << det100t << std::endl;
     
     return 0;
+
 }
